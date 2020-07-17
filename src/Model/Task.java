@@ -1,55 +1,95 @@
 package Model;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import Misc.Logger;
 
-public class Task { // ToDo build
+public class Task extends Event { // ToDo check build
 
-    private String name;
-
-    private int count = 0;
-    private Date loggedDate;
-    private String note;
+    private Date dueDate;
+    private static int count = 0;
+    private int number;
 
     public Task() {
-        count++;
+        number = ++count;
+        Logger.Log("An unnamed task has been created with hashcode: " + hashCode());
     }
 
     public Task(String name) {
-        this.name = name;
-        loggedDate = new Date(System.currentTimeMillis());
-        count++;
-        Logger.Log("Task " + this.name + "has been created with hashcode: " + hashCode());
+        super(name);
+        number = ++count;
+        Logger.Log("Task " + getName() + "has been created with hashcode: " + hashCode());
     }
 
     public Task(String name, String note) {
-        this.name = name;
-        this.note = note;
-        loggedDate = new Date(System.currentTimeMillis());
-        count++;
+        super(name, note);
+        number = ++count;
+        Logger.Log("Task " + getName() + "has been created with hashcode: " + hashCode());
     }
 
-    public String getLoggedDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'at' HH:mm:ss z");
-        return formatter.format(loggedDate);
+    public Task(String name, Priority priority) {
+        super(name, priority);
+        number = ++count;
+        Logger.Log("Task " + getName() + "has been created with hashcode: " + hashCode());
     }
 
-    public String getName() {
-        return name;
+    public Task(String name, String note, Priority priority) {
+        super(name, note, priority);
+        number = ++count;
+        Logger.Log("Task " + getName() + "has been created with hashcode: " + hashCode());
     }
 
-    public void setName(String name) {
-        this.name = name == null ? "" : name;
+    public Task(String name, String note, Priority priority, int year, int month, int day) {
+        super(name, note, priority);
+        number = ++count;
+        dueDate = new Date(year, month, day);
+        Logger.Log("Task " + getName() + "has been created with hashcode: " + hashCode());
 
     }
 
-    public String getNote() {
-        return note;
+    public String getDueDate() {
+        if (dueDate == null)
+            return "NA";
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        return formatter.format(dueDate);
     }
 
-    public void setNote(String note) {
-        this.note = note == null ? "" : note;
+    public void setDueDate(int year, int month, int day) {
+
+        if (dueDate == null) {
+            dueDate = new Date(year, month, day);
+            Logger.Log("Task " + getName() + "duedate set to: [" + day + " - " + month + " - " + year + "]");
+            return;
+        }
+
+        dueDate.setYear(year - 1900);
+        dueDate.setMonth(month);
+        dueDate.setDate(day);
+
+        Logger.Log("Task " + getName() + "duedate set to: [" + day + " - " + month + " - " + year + "]");
     }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) throws Exception { // ToDo build correctly
+
+        if (number == this.number)
+            return;
+        if (number >= count) {
+            Logger.Error("Task number is not possible");
+            throw new Exception("Task number is not possible");
+        }
+
+        Logger.Log("Task number of " + getName() + " was changed from " + this.number + " to: " + number);
+
+        for (Task task : Data.getTasks()) {
+            if (task.number == number)
+                task.number = this.number;
+        }
+        this.number = number;
+    }
+
 }

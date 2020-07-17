@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import Misc.Logger;
 import Model.Chart;
+import Model.Priority;
 import Model.Table;
+import Model.Task;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -31,6 +33,10 @@ public class Main {
         // chart.add("sec", 2);
         // System.out.println(chart.getValueOf("first"));
         // System.out.println(chart.toString());
+
+        Task l = new Task();
+        l.setPriority(Priority.EXTREME);
+        l.setDueDate(1, 1, 1);
 
         Logger.Declare("Program End");
     }
