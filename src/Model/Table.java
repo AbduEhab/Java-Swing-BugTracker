@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 import Misc.Logger;
 
-public class Table { //ToDo fix the first row of the table
+public class Table implements Component {
 
     private ArrayList<ArrayList<String>> table; // table itself (Collumns - Rows)
     private ArrayList<String> tableHeaders; // stores the name of the columns
+
     private String name; // name of the table itself
 
     public Table(String name) {
@@ -25,11 +26,11 @@ public class Table { //ToDo fix the first row of the table
             tableHeaders.add(string);
         }
         this.name = name;
-        
+
         Logger.Log("Table " + this.name + "has been created with hashcode: " + hashCode());
     }
 
-    public Table(String name, String[] columns){
+    public Table(String name, String[] columns) {
 
         for (String string : columns) {
             tableHeaders.add(string);
@@ -65,11 +66,17 @@ public class Table { //ToDo fix the first row of the table
         Logger.Log("Row added to " + name + " {" + this.getClass() + " @" + hashCode() + "}");
     }
 
-    public String toString() { // a bit over-engineered? doest seem like it     //ToDo redo?
+    public String toString() { // a bit over-engineered? doest seem like it
 
         String string = "\n" + name + ":\n";
 
+        for (int i = 0; i < tableHeaders.size(); i++) {
 
+            string += i == 0 ? "|" : "";
+            string += "\t" + (tableHeaders.get(i) == null ? "-" : tableHeaders.get(i)) + "\t | ";
+
+        }
+        string += "\n";
 
         for (int i = 0; i < columnSize(); i++) {
 
@@ -81,6 +88,7 @@ public class Table { //ToDo fix the first row of the table
             }
             string += "\n";
         }
+
         return string;
     }
 
@@ -90,27 +98,43 @@ public class Table { //ToDo fix the first row of the table
 
     }
 
-    public ArrayList<String> getRow(int index) throws Exception { // returns the requested row      //ToDo redo?
+    public ArrayList<String> getRow(int index) throws Exception { // returns the requested row
 
         if (table.get(0).size() < index) {
+
             Logger.Error("Row does not exist");
             throw new Exception("Row does not exist");
+
         }
+
         ArrayList<String> row = new ArrayList<String>();
 
         for (ArrayList<String> column : table) {
+
             if (column.get(index) == null)
                 row.add(null);
             else
                 row.add(column.get(index));
+
         }
         return row;
     }
 
-    public ArrayList<String> getColumn(int index) { // simple sol lol
+    public ArrayList<String> getColumn(int index) throws Exception { // simple
 
-        return table.get(index); // ToDo defencive programming
+        if (index > tableHeaders.size()) {
+            Logger.Error("Colummn " + index + " does not exist in table" + name + " @" + hashCode());
+            throw new Exception();
+        }
+        return table.get(index);
 
+    }
+
+    public boolean clearTable() { // erases all data on the table
+
+        table = new ArrayList<ArrayList<String>>();
+        tableHeaders = new ArrayList<String>();
+        return true;
     }
 
     public String getName() {
@@ -118,7 +142,8 @@ public class Table { //ToDo fix the first row of the table
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (!(name == null))
+            this.name = name;
     }
 
     public ArrayList<String> getTableHeaders() {
