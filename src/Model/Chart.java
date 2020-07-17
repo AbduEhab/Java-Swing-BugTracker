@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import Misc.Logger;
 
-public class Chart implements Component {
+public class Chart {
 
     private int size = 0; // number of elements in the chart
     private ArrayList<Double> percentages; // array of the percentages of each label
@@ -19,7 +19,7 @@ public class Chart implements Component {
         percentages = new ArrayList<Double>();
         this.name = name;
 
-        Logger.Log("Chart " + this.name + "has been created with hashcode: " + hashCode());
+        Logger.Log("Chart " + this.name + " has been created with hashcode: " + hashCode());
     }
 
     public Chart(String name, ArrayList<Integer> values, ArrayList<String> labels) {
@@ -29,7 +29,7 @@ public class Chart implements Component {
         percentages = new ArrayList<Double>();
         size = labels.size();
 
-        Logger.Log("Chart " + this.name + "has been created with hashcode: " + hashCode());
+        Logger.Log("Chart " + this.name + " has been created with hashcode: " + hashCode());
     }
 
     public void add(String label, int value) { // adds a label with a certain value
@@ -46,7 +46,7 @@ public class Chart implements Component {
 
         }
 
-        Logger.Log("Label Added to " + name + " (" + this.getClass() + " @" + hashCode() + "}");
+        Logger.Log("Label Added to " + name + " (" + this.getClass().getSimpleName() + " @" + hashCode() + "}");
     }
 
     public void remove(String label) throws Exception { // removes the label along with its value
@@ -64,19 +64,23 @@ public class Chart implements Component {
         size--;
         computePercentages();
 
+        Logger.Log("Label " + label + " in chart " + name + " @" + hashCode() + " has been removed");
+
     }
 
     public void change(String label, int value) throws Exception { // changes the value assigned to a label
 
         if (!labels.contains(label)) {
 
-            Logger.Error("Lable {" + label + "} does not exist in chart: " + name);
-            throw new Exception("Lable {" + label + "} does not exist in chart: " + name);
+            Logger.Error("Lable {" + label + "} does not exist in chart: " + name + " @" + hashCode());
+            throw new Exception("Lable {" + label + "} does not exist in chart: " + name + " @" + hashCode());
 
         }
 
         values.add(labels.indexOf(label), value);
         computePercentages();
+
+        Logger.Log("Value of " + label + " in chart " + name + " @" + hashCode() + " has been changed to: " + value);
 
     }
 
@@ -84,10 +88,12 @@ public class Chart implements Component {
 
         if (!labels.contains(label)) {
 
-            Logger.Error("Lable {" + label + "} does not exist in chart: " + name);
-            throw new Exception("Lable {" + label + "} does not exist in chart: " + name);
+            Logger.Error("Lable {" + label + "} does not exist in chart: " + name + " @" + hashCode());
+            throw new Exception("Lable {" + label + "} does not exist in chart: " + name + " @" + hashCode());
 
         }
+
+        Logger.Log("Label " + label + " in chart " + name + " @" + hashCode() + " has been changed to: " + newLabel);
 
         labels.add(labels.indexOf(label), newLabel);
 
@@ -115,8 +121,10 @@ public class Chart implements Component {
                                                         // but im coding it anyway
 
         if (size <= index) {
-            Logger.Error("label @" + index + " does not exist in: " + name);
-            throw new Exception("label @" + index + " does not exist in: " + name);
+            Logger.Error("label @" + index + " does not exist in: " + getClass().getSimpleName() + " " + name + " @"
+                    + hashCode());
+            throw new Exception("label @" + index + " does not exist in: " + getClass().getSimpleName() + " " + name
+                    + " @" + hashCode());
         }
 
         return labels.get(index);
@@ -126,8 +134,10 @@ public class Chart implements Component {
                                                       // but im coding it anyway
 
         if (size <= index) {
-            Logger.Error("Value @" + index + " does not exist in: " + name);
-            throw new Exception("Value @" + index + " does not exist in: " + name);
+            Logger.Error("Value @" + index + " does not exist in: " + getClass().getSimpleName() + " " + name + " @"
+                    + hashCode());
+            throw new Exception("Value @" + index + " does not exist in: " + getClass().getSimpleName() + " " + name
+                    + " @" + hashCode());
         }
 
         return values.get(index);
@@ -145,8 +155,10 @@ public class Chart implements Component {
         }
 
         if (!f) {
-            Logger.Error("Lable {" + label + "} does not exist in chart: " + name);
-            throw new Exception("Lable {" + label + "} does not exist in chart: " + name);
+            Logger.Error("Lable {" + label + "} does not exist in chart: " + getClass().getSimpleName() + " " + name
+                    + " @" + hashCode());
+            throw new Exception("Lable {" + label + "} does not exist in chart: " + getClass().getSimpleName() + " "
+                    + name + " @" + hashCode());
         }
 
         return values.get(labels.indexOf(label));
@@ -155,6 +167,15 @@ public class Chart implements Component {
     public double getPercentageOf(String label) { // gets the percentage of a certain label
 
         return percentages.get(labels.indexOf(label));
+    }
+
+    public boolean clearChart() { // erases all data on the chart
+
+        values = new ArrayList<Integer>();
+        labels = new ArrayList<String>();
+        percentages = new ArrayList<Double>();
+        Logger.Log("Chart: " + name + " @" + hashCode() + " has been cleared");
+        return true;
     }
 
     public String toString() {
@@ -176,8 +197,10 @@ public class Chart implements Component {
     }
 
     public void setName(String name) {
-        if (!(name == null))
+        if (!(name == null)) {
+            Logger.Log("Chart " + this.name + " has been renamed to: " + name);
             this.name = name;
+        }
     }
 
     public ArrayList<Double> getPercentages() {

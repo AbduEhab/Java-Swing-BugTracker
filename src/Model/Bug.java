@@ -2,7 +2,7 @@ package Model;
 
 import Misc.Logger;
 
-public class Bug implements Component {
+public class Bug {
 
     private String name;
     private Platform platform;
