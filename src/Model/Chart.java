@@ -6,15 +6,15 @@ import Misc.Logger;
 
 public class Chart {
 
-    private int size = 0; // number of elements in the chart
-    private ArrayList<Double> percentages; // array of the percentages of each label
-    private ArrayList<Integer> values; // array with the values of each label
-    private ArrayList<String> labels; // array with the labels in the chart
-
     private String name;
 
+    private int size = 0; // number of elements in the chart
+    private ArrayList<Double> percentages; // array of the percentages of each label
+    private ArrayList<Double> values; // array with the values of each label
+    private ArrayList<String> labels; // array with the labels in the chart
+
     public Chart(String name) {
-        values = new ArrayList<Integer>();
+        values = new ArrayList<Double>();
         labels = new ArrayList<String>();
         percentages = new ArrayList<Double>();
         this.name = name;
@@ -22,7 +22,7 @@ public class Chart {
         Logger.Log("Chart " + this.name + " has been created with hashcode: " + hashCode());
     }
 
-    public Chart(String name, ArrayList<Integer> values, ArrayList<String> labels) {
+    public Chart(String name, ArrayList<Double> values, ArrayList<String> labels) {
         this.values = values;
         this.labels = labels;
         this.name = name;
@@ -32,7 +32,7 @@ public class Chart {
         Logger.Log("Chart " + this.name + " has been created with hashcode: " + hashCode());
     }
 
-    public void add(String label, int value) { // adds a label with a certain value
+    public void add(String label, double value) { // adds a label with a certain value
 
         labels.add(label);
         values.add(value);
@@ -64,11 +64,11 @@ public class Chart {
         size--;
         computePercentages();
 
-        Logger.Log("Label " + label + " in chart " + name + " @" + hashCode() + " has been removed");
+        Logger.Warn("Label " + label + " in chart " + name + " @" + hashCode() + " has been removed");
 
     }
 
-    public void change(String label, int value) throws Exception { // changes the value assigned to a label
+    public void change(String label, double value) throws Exception { // changes the value assigned to a label
 
         if (!labels.contains(label)) {
 
@@ -77,10 +77,10 @@ public class Chart {
 
         }
 
-        values.add(labels.indexOf(label), value);
+        values.set(labels.indexOf(label), value);
         computePercentages();
 
-        Logger.Log("Value of " + label + " in chart " + name + " @" + hashCode() + " has been changed to: " + value);
+        Logger.Warn("Value of " + label + " in chart " + name + " @" + hashCode() + " has been changed to: " + value);
 
     }
 
@@ -93,16 +93,17 @@ public class Chart {
 
         }
 
-        Logger.Log("Label " + label + " in chart " + name + " @" + hashCode() + " has been changed to: " + newLabel);
+        labels.set(labels.indexOf(label), newLabel);
 
-        labels.add(labels.indexOf(label), newLabel);
-
+        Logger.Warn("Label " + label + " in chart " + name + " @" + hashCode() + " has been changed to: " + newLabel);
     }
 
     private void computePercentages() { // fixes the percentages after you add or remove a value
 
-        for (int i = 0; i < values.size(); i++) {
-            percentages.add(i, (values.size() / totalValue()) * 100.0);
+        percentages = new ArrayList<Double>();
+
+        for (double value : values) {
+            percentages.add((value / totalValue()) * 100.0);
         }
 
     }
@@ -110,7 +111,7 @@ public class Chart {
     public int totalValue() { // returns the sum of all the values
 
         int total = 0;
-        for (Integer val : values) {
+        for (Double val : values) {
             if (!(val == null))
                 total += val;
         }
@@ -130,8 +131,9 @@ public class Chart {
         return labels.get(index);
     }
 
-    public int getValue(int index) throws Exception { // gets the value of a certain index, i dont know if i'll use it
-                                                      // but im coding it anyway
+    public Double getValue(int index) throws Exception { // gets the value of a certain index, i dont know if i'll use
+                                                         // it
+                                                         // but im coding it anyway
 
         if (size <= index) {
             Logger.Error("Value @" + index + " does not exist in: " + getClass().getSimpleName() + " " + name + " @"
@@ -143,7 +145,7 @@ public class Chart {
         return values.get(index);
     }
 
-    public int getValueOf(String label) throws Exception { // gets the value of a certain label
+    public Double getValueOf(String label) throws Exception { // gets the value of a certain label
 
         boolean f = false;
         for (String name : labels) {
@@ -171,23 +173,21 @@ public class Chart {
 
     public boolean clearChart() { // erases all data on the chart
 
-        values = new ArrayList<Integer>();
+        values = new ArrayList<Double>();
         labels = new ArrayList<String>();
         percentages = new ArrayList<Double>();
-        Logger.Log("Chart: " + name + " @" + hashCode() + " has been cleared");
+        Logger.Warn("Chart: " + name + " @" + hashCode() + " has been cleared");
         return true;
     }
 
     public String toString() {
 
-        String string = "";
+        String string = "\n" + getClass().getSimpleName() + " " + name + ":\n";
 
         for (String label : labels) {
-            string += "| " + label + ": " + percentages.get(labels.indexOf(label)) + "% with value of: "
-                    + values.get(labels.indexOf(label)) + " ";
+            string += label + ": " + percentages.get(labels.indexOf(label)) + "% with value of: "
+                    + values.get(labels.indexOf(label)) + "\n";
         }
-
-        string += "|";
 
         return string;
     }
@@ -197,10 +197,10 @@ public class Chart {
     }
 
     public void setName(String name) {
-        if (!(name == null)) {
-            Logger.Log("Chart " + this.name + " has been renamed to: " + name);
-            this.name = name;
-        }
+
+        this.name = name == null ? "" : name;
+        Logger.Log("Chart " + this.name + " has been renamed to: " + name == null ? "" : name);
+
     }
 
     public ArrayList<Double> getPercentages() {

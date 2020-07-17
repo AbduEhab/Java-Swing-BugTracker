@@ -6,10 +6,10 @@ import Misc.Logger;
 
 public class Table {
 
+    private String name; // name of the table itself
+
     private ArrayList<ArrayList<String>> table; // table itself (Columns - Rows)
     private ArrayList<String> tableHeaders; // stores the name of the columns
-
-    private String name; // name of the table itself
 
     public Table(String name) {
 
@@ -66,34 +66,13 @@ public class Table {
         Logger.Log("Row added to " + name + " {" + this.getClass().getSimpleName() + " @" + hashCode() + "}");
     }
 
-    public void display() {
-        String string = "\n" + name + ":\n";
-
-        for (int i = 0; i < tableHeaders.size(); i++) {
-
-            string += i == 0 ? "|" : "";
-            string += "\t" + (tableHeaders.get(i) == null ? "-" : tableHeaders.get(i)) + "\t | ";
-
-        }
-        string += "\n";
-
-        for (int i = 0; i < rowCount(); i++) {
-
-            for (int j = 0; j < table.size(); j++) {
-
-                string += j == 0 ? "|" : "";
-                string += "\t" + (table.get(j).get(i) == null ? "-" : table.get(j).get(i)) + "\t | ";
-
-            }
-            string += "\n";
-        }
-
-        System.out.println(string);
+    public void display() { // ToDo actually implement it
+        System.out.println(toString());
     }
 
     public String toString() { // a bit over-engineered? doest seem like it
 
-        String string = "\n" + name + ":\n";
+        String string = "\n" + getClass().getSimpleName() + " " + name + ":\n";
 
         for (int i = 0; i < tableHeaders.size(); i++) {
 
@@ -125,7 +104,7 @@ public class Table {
 
     public ArrayList<String> getRow(int index) throws Exception { // returns the requested row
 
-        if (table.get(0).size() < index) {
+        if (rowCount() < index) {
 
             Logger.Error("Row does not exist in " + getClass().getSimpleName() + " " + name + " @" + hashCode());
             throw new Exception("Row does not exist");
@@ -161,9 +140,10 @@ public class Table {
 
         }
 
-        tableHeaders.add(tableHeaders.indexOf(header), newHeader);
+        tableHeaders.set(tableHeaders.indexOf(header), newHeader);
 
-        Logger.Log("Header " + header + " in table " + name + " @" + hashCode() + " has been changed to: " + newHeader);
+        Logger.Warn(
+                "Header " + header + " in table " + name + " @" + hashCode() + " has been changed to: " + newHeader);
     }
 
     public void changeValue(int row, int Column, String newValue) throws Exception { // ToDo build
@@ -176,7 +156,7 @@ public class Table {
         }
 
         table.get(Column).set(row, newValue);
-        Logger.Log("Value of index : [" + Column + ',' + row + "] in table " + name + " @" + hashCode()
+        Logger.Warn("Value of index : [" + Column + ',' + row + "] in table " + name + " @" + hashCode()
                 + " has been changed to: " + newValue);
     }
 
@@ -185,7 +165,7 @@ public class Table {
         table = new ArrayList<ArrayList<String>>();
         tableHeaders = new ArrayList<String>();
 
-        Logger.Log("Table: " + name + " @" + hashCode() + " has been cleared");
+        Logger.Warn("Table: " + name + " @" + hashCode() + " has been cleared");
         return true;
     }
 
@@ -194,10 +174,8 @@ public class Table {
     }
 
     public void setName(String name) {
-        if (!(name == null)) {
-            Logger.Log("Tabel " + this.name + " has been renamed to: " + name);
-            this.name = name;
-        }
+        this.name = name == null ? "" : name;
+        Logger.Log("Tabel " + this.name + " has been renamed to: " + name == null ? "" : name);
 
     }
 
