@@ -12,9 +12,6 @@ public class Logger {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
-    public Logger() {
-        //ToDO
-    }
 
     public static void Warn(String Message) {
         System.out.println(ANSI_YELLOW +"[Warning]: " + Message + "." + ANSI_WHITE);

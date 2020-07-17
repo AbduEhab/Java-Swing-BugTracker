@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import Misc.Logger;
 
-public class Table {
+public class Table { //ToDo fix the first row of the table
 
-    private ArrayList<ArrayList<String>> table; // table itself
+    private ArrayList<ArrayList<String>> table; // table itself (Collumns - Rows)
     private ArrayList<String> tableHeaders; // stores the name of the columns
     private String name; // name of the table itself
 
@@ -15,15 +15,28 @@ public class Table {
         table = new ArrayList<ArrayList<String>>();
         tableHeaders = new ArrayList<String>();
         this.name = name;
+
+        Logger.Log("Table " + this.name + "has been created with hashcode: " + hashCode());
     }
 
     public Table(String name, ArrayList<String> columns) {
 
         for (String string : columns) {
-            table.get(columns.indexOf(string)).add(string);
             tableHeaders.add(string);
         }
         this.name = name;
+        
+        Logger.Log("Table " + this.name + "has been created with hashcode: " + hashCode());
+    }
+
+    public Table(String name, String[] columns){
+
+        for (String string : columns) {
+            tableHeaders.add(string);
+        }
+        this.name = name;
+
+        Logger.Log("Table " + this.name + "has been created with hashcode: " + hashCode());
     }
 
     public void addColumn(String header) throws Exception { // adds a column to the table
@@ -38,10 +51,9 @@ public class Table {
         }
 
         tableHeaders.add(header);
-        ArrayList<String> temp = new ArrayList<String>();
-        temp.add(header);
-        table.add(temp);
-        Logger.Log("Column added to " + name + " (" + this.getClass() + " @" + hashCode() + "}");
+        table.add(new ArrayList<String>());
+
+        Logger.Log("Column added to " + name + " {" + this.getClass() + " @" + hashCode() + "}");
     }
 
     public void addRow(ArrayList<String> data) { // adds a row to the table
@@ -49,12 +61,15 @@ public class Table {
         for (ArrayList<String> column : table) {
             column.add(data.remove(0));
         }
-        Logger.Log("Row added to " + name + " (" + this.getClass() + " @" + hashCode() + "}");
+
+        Logger.Log("Row added to " + name + " {" + this.getClass() + " @" + hashCode() + "}");
     }
 
-    public String toString() { // a bit over-engineered?
+    public String toString() { // a bit over-engineered? doest seem like it     //ToDo redo?
 
         String string = "\n" + name + ":\n";
+
+
 
         for (int i = 0; i < columnSize(); i++) {
 
@@ -75,7 +90,7 @@ public class Table {
 
     }
 
-    public ArrayList<String> getRow(int index) throws Exception { // returns the requested row
+    public ArrayList<String> getRow(int index) throws Exception { // returns the requested row      //ToDo redo?
 
         if (table.get(0).size() < index) {
             Logger.Error("Row does not exist");
