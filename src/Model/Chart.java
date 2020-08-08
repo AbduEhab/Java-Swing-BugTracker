@@ -1,10 +1,11 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import Misc.Logger;
 
-public class Chart {
+public class Chart implements Serializable{
 
     private String name;
 

@@ -1,11 +1,13 @@
 package Model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import Misc.Logger;
 
-public abstract class Event { // ToDo check build
+public abstract class Event implements Serializable { // ToDo check build
 
     private String name;
     private Priority priority;
@@ -19,34 +21,13 @@ public abstract class Event { // ToDo check build
     }
 
     public Event(String name) {
+        this();
         this.name = name;
-        loggedDate = new Date(System.currentTimeMillis());
-        priority = Priority.NON;
-    }
-
-    public Event(String name, String note) {
-        this.name = name;
-        this.note = note;
-        loggedDate = new Date(System.currentTimeMillis());
-        priority = Priority.NON;
-    }
-
-    public Event(String name, Priority priority) {
-        this.name = name;
-        this.priority = priority;
-        loggedDate = new Date(System.currentTimeMillis());
-    }
-
-    public Event(String name, String note, Priority priority) {
-        this.name = name;
-        this.note = note;
-        loggedDate = new Date(System.currentTimeMillis());
-        this.priority = priority;
     }
 
     public String getLoggedDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy 'at' HH:mm z");
-        return formatter.format(loggedDate);
+
+        return new SimpleDateFormat("dd-MM-yyyy 'at' HH:mm z").format(loggedDate);
     }
 
     public String getName() {
@@ -71,13 +52,13 @@ public abstract class Event { // ToDo check build
         return priority;
     }
 
-    public void setPriority(Priority priority) {
+    public final void setPriority(Priority priority) {
         this.priority = priority;
         Logger.Log(getClass().getSimpleName() + " priority set to: " + priority);
     }
 
     public abstract int getNumber();
 
-    public abstract void setNumber(int number) throws Exception;
+    public abstract void setNumber(int number, ArrayList<Object> data) throws Exception;
 
 }

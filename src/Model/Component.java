@@ -1,5 +1,5 @@
 package Model;
 
-public interface Component { //ToDo build
-    public void update(); // updates the visual component
+public interface Component { // ToDo build
+    public void update(Object o); // updates the visual component
 }

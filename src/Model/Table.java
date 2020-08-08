@@ -1,26 +1,33 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import Misc.Logger;
 
-public class Table {
+public class Table implements Serializable {
 
     private String name; // name of the table itself
 
     private ArrayList<ArrayList<String>> table; // table itself (Columns - Rows)
     private ArrayList<String> tableHeaders; // stores the name of the columns
 
-    public Table(String name) {
-
+    public Table() {
         table = new ArrayList<ArrayList<String>>();
         tableHeaders = new ArrayList<String>();
+
+        name = "Unnamed Table";
+    }
+
+    public Table(String name) {
+        this();
         this.name = name;
 
         Logger.Log("Table " + this.name + "has been created with hashcode: " + hashCode());
     }
 
     public Table(String name, ArrayList<String> columns) {
+        this();
 
         for (String string : columns) {
             tableHeaders.add(string);
@@ -31,6 +38,7 @@ public class Table {
     }
 
     public Table(String name, String[] columns) {
+        this();
 
         for (String string : columns) {
             tableHeaders.add(string);

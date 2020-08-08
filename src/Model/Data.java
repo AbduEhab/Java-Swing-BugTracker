@@ -1,10 +1,11 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import Misc.Logger;
 
-public class Data { // on hold till i complete the basic models
+public class Data implements Serializable { // on hold till i complete the basic models
 
     private static ArrayList<Table> tables;
     private static ArrayList<Task> tasks;
@@ -31,14 +32,6 @@ public class Data { // on hold till i complete the basic models
 
         tables.add(table);
 
-    }
-
-    public static ArrayList<Task> getTasks() {
-        return tasks;
-    }
-
-    public static ArrayList<Bug> getBugs() {
-        return bugs;
     }
 
 }

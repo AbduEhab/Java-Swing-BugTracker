@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 import Misc.Logger;
 
 public class Bug extends Event { // ToDo check build
@@ -7,6 +9,7 @@ public class Bug extends Event { // ToDo check build
     private Platform platform;
     private String bug;
     private static int count = 0;
+    private int savedint;
     private int number;
 
     public Bug() {
@@ -20,67 +23,56 @@ public class Bug extends Event { // ToDo check build
         Logger.Log("Bug " + getName() + "has been created with hashcode: " + hashCode());
     }
 
-    public Bug(String name, Platform platform) {
-        super(name);
-        this.platform = platform;
-        number = ++count;
-        Logger.Log("Bug " + getName() + "has been created with hashcode: " + hashCode());
-    }
-
     public Bug(String name, String bug) {
-        super(name);
+        this(name);
         this.bug = bug;
-        number = ++count;
-        Logger.Log("Bug " + getName() + "has been created with hashcode: " + hashCode());
     }
 
-    public Bug(String name, String bug, Platform platform) {
-        super(name);
-        this.bug = bug;
+    public Bug(String name, Platform platform) {
+        this(name);
         this.platform = platform;
-        number = ++count;
-        Logger.Log("Bug " + getName() + "has been created with hashcode: " + hashCode());
-    }
-
-    public Bug(String name, String bug, String note) {
-        super(name, note);
-        this.bug = bug;
-        number = ++count;
-        Logger.Log("Bug " + getName() + "has been created with hashcode: " + hashCode());
-    }
-
-    public Bug(String name, String bug, Platform platform, String note) {
-        super(name, note);
-        this.bug = bug;
-        this.platform = platform;
-        number = ++count;
-        Logger.Log("Bug " + getName() + "has been created with hashcode: " + hashCode());
     }
 
     public Bug(String name, Priority priority) {
-        super(name, priority);
-        number = ++count;
-        Logger.Log("Bug " + getName() + "has been created with hashcode: " + hashCode());
+        this(name);
+        setPriority(priority);
+    }
+
+    public Bug(String name, String bug, String note) {
+        this(name, bug);
+        setNote(note);
+    }
+
+    public Bug(String name, String bug, Platform platform) {
+        this(name, platform);
+        this.bug = bug;
     }
 
     public Bug(String name, String note, Priority priority) {
-        super(name, note, priority);
-        number = ++count;
-        Logger.Log("Bug " + getName() + "has been created with hashcode: " + hashCode());
+        this(name, priority);
+        setNote(note);
+    }
+
+    public Bug(String name, String bug, Platform platform, String note) {
+        this(name, note, platform);
+        this.bug = bug;
     }
 
     public Bug(String name, String bug, String note, Priority priority) {
-        super(name, note, priority);
+        this(name, note, priority);
         this.bug = bug;
-        number = ++count;
-        Logger.Log("Bug " + getName() + "has been created with hashcode: " + hashCode());
+    }
+
+    public Bug(String name, String bug, String note, Platform platform, Priority priority) {
+        this(name, bug, note, priority);
+        this.platform = platform;
     }
 
     public int getNumber() {
         return number;
     }
 
-    public void setNumber(int number) throws Exception { // ToDo build correctly
+    public void setNumber(int number, ArrayList<Object> bugs) throws Exception { // a bigger set method than anticipated
 
         if (number == this.number)
             return;
@@ -91,9 +83,9 @@ public class Bug extends Event { // ToDo check build
 
         Logger.Log("Bug number of " + getName() + " was changed from " + this.number + " to: " + number);
 
-        for (Bug bug : Data.getBugs()) {
-            if (bug.number == number)
-                bug.number = this.number;
+        for (Object bug : bugs) {
+            if (((Bug) bug).number == number)
+                ((Bug) bug).number = this.number;
         }
         this.number = number;
     }
