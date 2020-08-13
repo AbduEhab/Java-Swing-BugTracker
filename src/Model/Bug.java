@@ -20,7 +20,7 @@ public class Bug extends Event { // ToDo check build
     public Bug(String name) {
         super(name);
         number = ++count;
-        Logger.Log("Bug " + getName() + "has been created with hashcode: " + hashCode());
+        Logger.Log("Bug " + getName() + " has been created with hashcode: " + hashCode());
     }
 
     public Bug(String name, String bug) {

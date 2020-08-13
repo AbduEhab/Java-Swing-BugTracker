@@ -23,15 +23,16 @@ public class Table implements Serializable {
         this();
         this.name = name;
 
-        Logger.Log("Table " + this.name + "has been created with hashcode: " + hashCode());
+        Logger.Log("Table " + this.name + " has been created with hashcode: " + hashCode());
     }
 
     public Table(String name, ArrayList<String> columns) {
         this();
 
-        for (String string : columns) {
-            tableHeaders.add(string);
-        }
+        if (columns != null)
+            for (String string : columns) {
+                tableHeaders.add(string);
+            }
         this.name = name;
 
         Logger.Log("Table " + this.name + "has been created with hashcode: " + hashCode());
@@ -40,9 +41,10 @@ public class Table implements Serializable {
     public Table(String name, String[] columns) {
         this();
 
-        for (String string : columns) {
-            tableHeaders.add(string);
-        }
+        if (columns != null)
+            for (String string : columns) {
+                tableHeaders.add(string);
+            }
         this.name = name;
 
         Logger.Log("Table " + this.name + "has been created with hashcode: " + hashCode());
@@ -68,7 +70,10 @@ public class Table implements Serializable {
     public void addRow(ArrayList<String> data) { // adds a row to the table
 
         for (ArrayList<String> column : table) {
-            column.add(data.remove(0));
+            if (!(data.size() == 0))
+                column.add(data.remove(0));
+            else
+                column.add("null");
         }
 
         Logger.Log("Row added to " + name + " {" + this.getClass().getSimpleName() + " @" + hashCode() + "}");
@@ -78,7 +83,7 @@ public class Table implements Serializable {
         System.out.println(toString());
     }
 
-    public String toString() { // a bit over-engineered? doest seem like it
+    public String toString() {
 
         String string = "\n" + getClass().getSimpleName() + " " + name + ":\n";
 
@@ -148,13 +153,18 @@ public class Table implements Serializable {
 
         }
 
-        tableHeaders.set(tableHeaders.indexOf(header), newHeader);
+        if (tableHeaders.contains(newHeader)) {
+            int i = tableHeaders.indexOf(header);
+            tableHeaders.set(tableHeaders.indexOf(newHeader), header);
+            tableHeaders.set(i, newHeader);
+        } else
+            tableHeaders.set(tableHeaders.indexOf(header), newHeader);
 
         Logger.Warn(
                 "Header " + header + " in table " + name + " @" + hashCode() + " has been changed to: " + newHeader);
     }
 
-    public void changeValue(int row, int Column, String newValue) throws Exception { // ToDo build
+    public void changeValue(int row, int Column, String newValue) throws Exception { // check build
 
         if (row > rowCount() || Column > tableHeaders.size()) {
 

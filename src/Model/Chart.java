@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import Misc.Logger;
 
-public class Chart implements Serializable{
+public class Chart implements Serializable {
 
     private String name;
 
@@ -13,6 +13,14 @@ public class Chart implements Serializable{
     private ArrayList<Double> percentages; // array of the percentages of each label
     private ArrayList<Double> values; // array with the values of each label
     private ArrayList<String> labels; // array with the labels in the chart
+
+    public Chart() {
+        values = new ArrayList<Double>();
+        labels = new ArrayList<String>();
+        percentages = new ArrayList<Double>();
+        name = "Unnamed Chart";
+
+    }
 
     public Chart(String name) {
         values = new ArrayList<Double>();
@@ -24,10 +32,9 @@ public class Chart implements Serializable{
     }
 
     public Chart(String name, ArrayList<Double> values, ArrayList<String> labels) {
+        this(name);
         this.values = values;
         this.labels = labels;
-        this.name = name;
-        percentages = new ArrayList<Double>();
         size = labels.size();
 
         Logger.Log("Chart " + this.name + " has been created with hashcode: " + hashCode());
@@ -50,23 +57,23 @@ public class Chart implements Serializable{
         Logger.Log("Label Added to " + name + " (" + this.getClass().getSimpleName() + " @" + hashCode() + "}");
     }
 
-    public void remove(String label) throws Exception { // removes the label along with its value
+    public void change(String label, String newLabel) throws Exception { // changes the name of a label
 
         if (!labels.contains(label)) {
 
-            Logger.Error("Lable {" + label + "} does not exist in chart: " + name);
-            throw new Exception("Lable {" + label + "} does not exist in chart: " + name);
+            Logger.Error("Lable {" + label + "} does not exist in chart: " + name + " @" + hashCode());
+            throw new Exception("Lable {" + label + "} does not exist in chart: " + name + " @" + hashCode());
 
         }
 
-        percentages.remove(percentages.get(labels.indexOf(label)));
-        values.remove(values.get(labels.indexOf(label)));
-        labels.remove(labels.get(labels.indexOf(label)));
-        size--;
-        computePercentages();
+        if (labels.contains(newLabel)) {
+            int i = labels.indexOf(label);
+            labels.set(labels.indexOf(newLabel), label);
+            labels.set(i, newLabel);
+        } else
+            labels.set(labels.indexOf(label), newLabel);
 
-        Logger.Warn("Label " + label + " in chart " + name + " @" + hashCode() + " has been removed");
-
+        Logger.Warn("Label " + label + " in chart " + name + " @" + hashCode() + " has been changed to: " + newLabel);
     }
 
     public void change(String label, double value) throws Exception { // changes the value assigned to a label
@@ -85,18 +92,23 @@ public class Chart implements Serializable{
 
     }
 
-    public void change(String label, String newLabel) throws Exception { // changes the name of a label
+    public void remove(String label) throws Exception { // removes the label along with its value
 
         if (!labels.contains(label)) {
 
-            Logger.Error("Lable {" + label + "} does not exist in chart: " + name + " @" + hashCode());
-            throw new Exception("Lable {" + label + "} does not exist in chart: " + name + " @" + hashCode());
+            Logger.Error("Lable {" + label + "} does not exist in chart: " + name);
+            throw new Exception("Lable {" + label + "} does not exist in chart: " + name);
 
         }
 
-        labels.set(labels.indexOf(label), newLabel);
+        percentages.remove(percentages.get(labels.indexOf(label)));
+        values.remove(values.get(labels.indexOf(label)));
+        labels.remove(labels.get(labels.indexOf(label)));
+        size--;
+        computePercentages();
 
-        Logger.Warn("Label " + label + " in chart " + name + " @" + hashCode() + " has been changed to: " + newLabel);
+        Logger.Warn("Label " + label + " in chart " + name + " @" + hashCode() + " has been removed");
+
     }
 
     private void computePercentages() { // fixes the percentages after you add or remove a value
