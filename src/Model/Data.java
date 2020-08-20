@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import Misc.Logger;
 
 public class Data implements Serializable { // ToDo
-    private static ArrayList<Table> tables;
-    private static ArrayList<Chart> charts;
-    private static ArrayList<Task> tasks;
-    private static ArrayList<Bug> bugs;
+    private static ArrayList<Object> tables;
+    private static ArrayList<Object> charts;
+    private static ArrayList<Object> tasks;
+    private static ArrayList<Object> bugs;
 
     public Data() {
 
-        tables = new ArrayList<Table>();
-        charts = new ArrayList<Chart>();
-        tasks = new ArrayList<Task>();
-        bugs = new ArrayList<Bug>();
+        tables = new ArrayList<Object>();
+        charts = new ArrayList<Object>();
+        tasks = new ArrayList<Object>();
+        bugs = new ArrayList<Object>();
     }
 
     public void AddTable(String name, ArrayList<String> columns) {
@@ -65,9 +65,9 @@ public class Data implements Serializable { // ToDo
 
     public Table getTable(String Name) throws Exception {
 
-        for (Table table : tables) {
-            if (table.getName().equals(Name))
-                return table;
+        for (Object table : tables) {
+            if (((Table) table).getName().equals(Name))
+                return (Table) table;
         }
 
         Logger.Error("Table could not be returned, Table: " + Name);
@@ -76,9 +76,9 @@ public class Data implements Serializable { // ToDo
 
     public Chart getChart(String Name) throws Exception {
 
-        for (Chart chart : charts) {
-            if (chart.getName().equals(Name))
-                return chart;
+        for (Object chart : charts) {
+            if (((Chart) chart).getName().equals(Name))
+                return (Chart) chart;
         }
 
         Logger.Error("Chart could not be returned, Chart: " + Name);
@@ -87,9 +87,9 @@ public class Data implements Serializable { // ToDo
 
     public Task getTask(String Name) throws Exception {
 
-        for (Task task : tasks) {
-            if (task.getName().equals(Name))
-                return task;
+        for (Object task : tasks) {
+            if (((Task) task).getName().equals(Name))
+                return (Task) task;
         }
 
         Logger.Error("Task could not be returned, Task: " + Name);
@@ -98,28 +98,28 @@ public class Data implements Serializable { // ToDo
 
     public Bug getBug(String Name) throws Exception {
 
-        for (Bug bug : bugs) {
-            if (bug.getName().equals(Name))
-                return bug;
+        for (Object bug : bugs) {
+            if (((Bug) bug).getName().equals(Name))
+                return (Bug) bug;
         }
 
         Logger.Error("Bug could not be returned, Bug: " + Name);
         throw new Exception("Bug could not be returned, Bug: " + Name);
     }
 
-    public ArrayList<Table> getTables() {
+    public ArrayList<Object> getTables() {
         return tables;
     }
 
-    public ArrayList<Chart> getCharts() {
+    public ArrayList<Object> getCharts() {
         return charts;
     }
 
-    public ArrayList<Task> getTasks() {
+    public ArrayList<Object> getTasks() {
         return tasks;
     }
 
-    public ArrayList<Bug> getBugs() {
+    public ArrayList<Object> getBugs() {
         return bugs;
     }
 

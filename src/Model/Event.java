@@ -13,6 +13,7 @@ public abstract class Event implements Serializable { // ToDo check build
     private Priority priority;
     private Date loggedDate;
     private String note;
+    private DataTypeListener listener;
 
     public Event() {
         name = "Unnamed " + getClass().getSimpleName();

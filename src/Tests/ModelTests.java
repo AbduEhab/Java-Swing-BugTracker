@@ -202,7 +202,35 @@ public class ModelTests {
         chart.add("2", 3);
         chart.remove("2");
         try {
-            assertEquals(100, chart.getPercentageOf("1"), "Label was removed");
+            assertEquals(100, chart.getPercentageOf("1"), "Label was not removed");
+        } catch (Exception e) {
+            fail("Method threw an Exception");
+        }
+    }
+
+    @Test
+    @DisplayName("Set Number Method (Bug)")
+    @Timeout(5)
+    void SetNumberBug() throws Exception {
+        data.AddBug("1", null, null, null, null);
+        data.AddBug("2", null, null, null, null);
+        data.getBug("1").setNumber(2, data.getBugs());
+        try {
+            assertEquals(2, data.getBug("1").getNumber(), "Bug's number was not changed correctly");
+        } catch (Exception e) {
+            fail("Method threw an Exception");
+        }
+    }
+
+    @Test
+    @DisplayName("Set Number Method (Task)")
+    @Timeout(5)
+    void SetNumberTask() throws Exception {
+        data.AddTask("1", null, null, 0, 0, 0);
+        data.AddTask("1", null, null, 0, 0, 0);
+        data.getTask("1").setNumber(2, data.getTasks());
+        try {
+            assertEquals(2, data.getTask("1").getNumber(), "Task's number was not changed correctly");
         } catch (Exception e) {
             fail("Method threw an Exception");
         }

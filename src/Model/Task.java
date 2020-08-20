@@ -12,6 +12,7 @@ public class Task extends Event { // ToDo check build
     private static int count = 0;
     private int savedint;
     private int number;
+    private DataTypeListener listener;
 
     public Task() {
         super();
