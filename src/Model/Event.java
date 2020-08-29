@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import Misc.Logger;
 
@@ -13,7 +14,6 @@ public abstract class Event implements Serializable { // ToDo check build
     private Priority priority;
     private Date loggedDate;
     private String note;
-    private DataTypeListener listener;
 
     public Event() {
         name = "Unnamed " + getClass().getSimpleName();
@@ -60,6 +60,6 @@ public abstract class Event implements Serializable { // ToDo check build
 
     public abstract int getNumber();
 
-    public abstract void setNumber(int number, ArrayList<Object> data) throws Exception;
+    public abstract void setNumber(int number, HashMap<String, Object> data) throws Exception;
 
 }

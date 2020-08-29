@@ -3,16 +3,16 @@ package Model;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Misc.Logger;
 
-public class Task extends Event { // ToDo check build
+public class Task extends Event { // ToDo null name generator
 
     private Date dueDate;
     private static int count = 0;
     private int savedint;
     private int number;
-    private DataTypeListener listener;
 
     public Task() {
         super();
@@ -74,7 +74,7 @@ public class Task extends Event { // ToDo check build
         return number;
     }
 
-    public void setNumber(int number, ArrayList<Object> tasks) throws Exception { // ToDo build correctly
+    public void setNumber(int number, HashMap<String, Object> tasks) throws Exception { // ToDo build correctly
 
         if (number == this.number)
             return;
@@ -85,7 +85,7 @@ public class Task extends Event { // ToDo check build
 
         Logger.Log("Task number of " + getName() + " was changed from " + this.number + " to: " + number);
 
-        for (Object task : tasks) {
+        for (Object task : tasks.values()) {
             if (((Task) task).number == number)
                 ((Task) task).number = this.number;
         }

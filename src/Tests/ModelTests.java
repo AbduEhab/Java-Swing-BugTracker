@@ -246,22 +246,22 @@ public class ModelTests {
         data.AddBug("2", null, null, null, null);
 
         try {
-            assertEquals(data.getBugs().get(0), data.getBug("2"));
+            assertEquals(data.getBugs().get("2"), data.getBug("2"));
         } catch (Exception e) {
             fail("Could not get the Bug");
         }
         try {
-            assertEquals(data.getTables().get(0), data.getTable("2"));
+            assertEquals(data.getTables().get("2"), data.getTable("2"));
         } catch (Exception e) {
             fail("Could not get the Table");
         }
         try {
-            assertEquals(data.getTasks().get(0), data.getTask("2"));
+            assertEquals(data.getTasks().get("2"), data.getTask("2"));
         } catch (Exception e) {
             fail("Could not get the Task");
         }
         try {
-            assertEquals(data.getCharts().get(0), data.getChart("2"));
+            assertEquals(data.getCharts().get("2"), data.getChart("2"));
         } catch (Exception e) {
             fail("Could not get the Chart");
         }
@@ -273,19 +273,19 @@ public class ModelTests {
     void dataRemove() {
 
         data.AddTask("2", null, null, 0, 0, 0);
-        data.remove(data.getTasks().get(0));
+        data.remove(data.getTasks().get("2"));
         assertEquals(0, data.getTasks().size(), "Task was not removed");
 
         data.AddTable("2", null);
-        data.remove(data.getTables().get(0));
+        data.remove(data.getTables().get("2"));
         assertEquals(0, data.getTables().size(), "Task was not removed");
 
         data.AddChart("2");
-        data.remove(data.getCharts().get(0));
+        data.remove(data.getCharts().get("2"));
         assertEquals(0, data.getCharts().size(), "Task was not removed");
 
         data.AddBug("2", null, null, null, null);
-        data.remove(data.getBugs().get(0));
+        data.remove(data.getBugs().get("2"));
         assertEquals(0, data.getBugs().size(), "Task was not removed");
     }
 

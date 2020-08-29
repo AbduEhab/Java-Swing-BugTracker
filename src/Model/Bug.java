@@ -1,10 +1,11 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Misc.Logger;
 
-public class Bug extends Event { // ToDo check build
+public class Bug extends Event { // ToDo null name generator
 
     private Platform platform;
     private String bug;
@@ -72,18 +73,19 @@ public class Bug extends Event { // ToDo check build
         return number;
     }
 
-    public void setNumber(int number, ArrayList<Object> bugs) throws Exception { // a bigger set method than anticipated
+    public void setNumber(int number, HashMap<String, Object> bugs) throws Exception { // a bigger set method than
+                                                                                       // anticipated
 
         if (number == this.number)
             return;
-        if (number >= count) {
+        if (number > count) {
             Logger.Error("Bug number is not possible");
             throw new Exception("Bug number is not possible");
         }
 
         Logger.Log("Bug number of " + getName() + " was changed from " + this.number + " to: " + number);
 
-        for (Object bug : bugs) {
+        for (Object bug : bugs.values()) {
             if (((Bug) bug).number == number)
                 ((Bug) bug).number = this.number;
         }

@@ -5,14 +5,11 @@ import java.util.ArrayList;
 
 import Misc.Logger;
 
-public class Table implements Serializable {
+public class Table implements Serializable { // ToDo implement using Hashmaps
 
     private String name; // name of the table itself
-
     private ArrayList<ArrayList<String>> table; // table itself (Columns - Rows)
     private ArrayList<String> tableHeaders; // stores the name of the columns
-
-    private DataTypeListener listener;
 
     public Table() {
         table = new ArrayList<ArrayList<String>>();
