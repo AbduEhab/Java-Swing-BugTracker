@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import Misc.Logger;
 
-public class Task extends Event { // ToDo null name generator
+public class Task extends Event { 
 
     private Date dueDate;
     private static int count = 0;
@@ -15,7 +15,7 @@ public class Task extends Event { // ToDo null name generator
     private int number;
 
     public Task() {
-        super();
+        super("Task " + count);
         number = ++count;
         Logger.Log("An unnamed task has been created with hashcode: " + hashCode());
     }

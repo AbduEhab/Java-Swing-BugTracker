@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import Misc.Logger;
 
-public class Table implements Serializable { // ToDo implement using Hashmaps
+public class Table implements Serializable {
 
     private String name; // name of the table itself
     private ArrayList<ArrayList<String>> table; // table itself (Columns - Rows)

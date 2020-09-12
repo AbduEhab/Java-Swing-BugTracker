@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import Misc.Logger;
 
-public class Bug extends Event { // ToDo null name generator
+public class Bug extends Event {
 
     private Platform platform;
     private String bug;
@@ -14,7 +14,9 @@ public class Bug extends Event { // ToDo null name generator
     private int number;
 
     public Bug() {
+        super("Bug " + count);
         number = ++count;
+        
         Logger.Log("An unnamed Bug has been created with hashcode: " + hashCode());
     }
 
