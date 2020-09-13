@@ -78,7 +78,7 @@ public class Table implements Serializable {
         Logger.Log("Row added to " + name + " {" + this.getClass().getSimpleName() + " @" + hashCode() + "}");
     }
 
-    public void display() { // ToDo actually implement it
+    public void display() {
         System.out.println(toString());
     }
 
@@ -173,6 +173,20 @@ public class Table implements Serializable {
         }
 
         table.get(Column).set(row, newValue);
+        Logger.Warn("Value of index : [" + Column + ',' + row + "] in table " + name + " @" + hashCode()
+                + " has been changed to: " + newValue);
+    }
+
+    public void changeValue(int row, String Column, String newValue) throws Exception { // check build
+
+        if (row > rowCount() || table.indexOf(Column) > tableHeaders.size()) {
+
+            Logger.Error("Invalid index in table: " + name + " @" + hashCode());
+            throw new Exception("Invalid index in table: " + name + " @" + hashCode());
+
+        }
+
+        table.get(table.indexOf(Column)).set(row, newValue);
         Logger.Warn("Value of index : [" + Column + ',' + row + "] in table " + name + " @" + hashCode()
                 + " has been changed to: " + newValue);
     }

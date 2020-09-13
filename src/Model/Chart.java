@@ -193,6 +193,10 @@ public class Chart implements Serializable {
         return true;
     }
 
+    public void display() {
+        System.out.println(toString());
+    }
+
     public String toString() {
 
         String string = "\n" + getClass().getSimpleName() + " " + name + ":\n";

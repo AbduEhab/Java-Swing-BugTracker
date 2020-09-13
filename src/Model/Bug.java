@@ -1,6 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import Misc.Logger;
@@ -8,7 +7,7 @@ import Misc.Logger;
 public class Bug extends Event {
 
     private Platform platform;
-    private String bug;
+    private String problem;
     private static int count = 0;
     private int savedint;
     private int number;
@@ -16,7 +15,7 @@ public class Bug extends Event {
     public Bug() {
         super("Bug " + count);
         number = ++count;
-        
+
         Logger.Log("An unnamed Bug has been created with hashcode: " + hashCode());
     }
 
@@ -26,9 +25,9 @@ public class Bug extends Event {
         Logger.Log("Bug " + getName() + " has been created with hashcode: " + hashCode());
     }
 
-    public Bug(String name, String bug) {
+    public Bug(String name, String problem) {
         this(name);
-        this.bug = bug;
+        this.problem = problem;
     }
 
     public Bug(String name, Platform platform) {
@@ -41,14 +40,14 @@ public class Bug extends Event {
         setPriority(priority);
     }
 
-    public Bug(String name, String bug, String note) {
-        this(name, bug);
+    public Bug(String name, String problem, String note) {
+        this(name, problem);
         setNote(note);
     }
 
-    public Bug(String name, String bug, Platform platform) {
+    public Bug(String name, String problem, Platform platform) {
         this(name, platform);
-        this.bug = bug;
+        this.problem = problem;
     }
 
     public Bug(String name, String note, Priority priority) {
@@ -56,18 +55,18 @@ public class Bug extends Event {
         setNote(note);
     }
 
-    public Bug(String name, String bug, Platform platform, String note) {
+    public Bug(String name, String problem, Platform platform, String note) {
         this(name, note, platform);
-        this.bug = bug;
+        this.problem = problem;
     }
 
-    public Bug(String name, String bug, String note, Priority priority) {
+    public Bug(String name, String problem, String note, Priority priority) {
         this(name, note, priority);
-        this.bug = bug;
+        this.problem = problem;
     }
 
-    public Bug(String name, String bug, String note, Platform platform, Priority priority) {
-        this(name, bug, note, priority);
+    public Bug(String name, String problem, String note, Platform platform, Priority priority) {
+        this(name, problem, note, priority);
         this.platform = platform;
     }
 
@@ -94,6 +93,12 @@ public class Bug extends Event {
         this.number = number;
     }
 
+    public String toString() {
+        return "\n" + getClass().getSimpleName() + " " + getName()
+                + ":\n".concat("Problem: " + problem + "/n").concat("Platform: " + platform + "/n")
+                        .concat("Note: " + getNote() + "/n").concat("Priority: " + getPriority() + "/n");
+    }
+
     public Platform getPlatform() {
         return platform == null ? Platform.NA : platform;
     }
@@ -102,12 +107,12 @@ public class Bug extends Event {
         this.platform = platform;
     }
 
-    public String getBug() {
-        return bug == null ? "NA" : bug;
+    public String getProblem() {
+        return problem == null ? "NA" : problem;
     }
 
-    public void setBug(String bug) {
-        this.bug = bug == null ? "NA" : bug;
+    public void setBug(String problem) {
+        this.problem = problem == null ? "NA" : problem;
     }
 
 }

@@ -7,9 +7,10 @@ import java.util.HashMap;
 
 import Misc.Logger;
 
-public class Task extends Event { 
+public class Task extends Event {
 
     private Date dueDate;
+    private String task;
     private static int count = 0;
     private int savedint;
     private int number;
@@ -26,18 +27,23 @@ public class Task extends Event {
         Logger.Log("Task " + getName() + " has been created with hashcode: " + hashCode());
     }
 
-    public Task(String name, String note) {
+    public Task(String name, String task) {
         this(name);
+        this.task = task;
+    }
+
+    public Task(String name, String task, String note) {
+        this(name, task);
         setNote(note);
     }
 
-    public Task(String name, Priority priority) {
-        this(name);
+    public Task(String name, String task, Priority priority) {
+        this(name, task);
         setPriority(priority);
     }
 
-    public Task(String name, String note, Priority priority) {
-        this(name, priority);
+    public Task(String name, String task, String note, Priority priority) {
+        this(name, task, priority);
         setNote(note);
     }
 
@@ -46,6 +52,12 @@ public class Task extends Event {
         dueDate = new Date(year, month, day);
         Logger.Log("Task " + getName() + " has been created with hashcode: " + hashCode());
 
+    }
+
+    public String toString() {
+        return "\n" + getClass().getSimpleName() + " " + getName()
+                + ":\n".concat("Task: " + task + "/n").concat("DueDate: " + dueDate + "/n")
+                        .concat("Note: " + getNote() + "/n").concat("Priority: " + getPriority() + "/n");
     }
 
     public String getDueDate() {
