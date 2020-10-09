@@ -111,7 +111,7 @@ public class Bug extends Event {
         return problem == null ? "NA" : problem;
     }
 
-    public void setBug(String problem) {
+    public void setProblem(String problem) {
         this.problem = problem == null ? "NA" : problem;
     }
 

@@ -70,8 +70,8 @@ public class Data implements Serializable {
         if (temp != null)
             return temp;
 
-        Logger.Error("Table could not be returned, Table: " + Name);
-        throw new Exception("Table could not be returned, Table: " + Name);
+        Logger.Error("Table could not be Found, Table: " + Name);
+        throw new Exception("Table could not be Found, Table: " + Name);
     }
 
     public Chart getChart(String Name) throws Exception {
@@ -80,8 +80,8 @@ public class Data implements Serializable {
         if (temp != null)
             return temp;
 
-        Logger.Error("Chart could not be returned, Chart: " + Name);
-        throw new Exception("Chart could not be returned, Chart: " + Name);
+        Logger.Error("Chart could not be Found, Chart: " + Name);
+        throw new Exception("Chart could not be Found, Chart: " + Name);
     }
 
     public Task getTask(String Name) throws Exception {
@@ -90,8 +90,8 @@ public class Data implements Serializable {
         if (temp != null)
             return temp;
 
-        Logger.Error("Task could not be returned, Task: " + Name);
-        throw new Exception("Task could not be returned, Task: " + Name);
+        Logger.Error("Task could not be Found, Task: " + Name);
+        throw new Exception("Task could not be Found, Task: " + Name);
     }
 
     public Bug getBug(String Name) throws Exception {
@@ -100,8 +100,8 @@ public class Data implements Serializable {
         if (temp != null)
             return temp;
 
-        Logger.Error("Bug could not be returned, Bug: " + Name);
-        throw new Exception("Bug could not be returned, Bug: " + Name);
+        Logger.Error("Bug could not be Found, Bug: " + Name);
+        throw new Exception("Bug could not be Found, Bug: " + Name);
     }
 
     public HashMap<String, Object> getTables() {

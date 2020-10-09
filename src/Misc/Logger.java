@@ -3,7 +3,7 @@ package Misc;
 public class Logger {
 
     private static String logString = "";
-
+    public static boolean show = true;
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -15,23 +15,26 @@ public class Logger {
     public static final String ANSI_WHITE = "\u001B[37m";
 
     public static void Warn(String Message) {
-        System.out.println(ANSI_YELLOW + "[Warning]: " + Message + "." + ANSI_WHITE);
-        logString += ANSI_YELLOW + "[Warning]: " + Message + "." + ANSI_WHITE + "/n";
+        if(show)
+            System.out.println(ANSI_YELLOW + "[Warning]: " + Message + "." + ANSI_WHITE);
+        logString += ANSI_YELLOW + "[Warning]: " + Message + "." + ANSI_WHITE + "\n";
     }
 
     public static void Error(String Message) {
-        System.out.println(ANSI_RED + "[Error]: " + Message + "." + ANSI_WHITE);
-        logString += ANSI_RED + "[Error]: " + Message + "." + ANSI_WHITE + "/n";
+        if (show)
+            System.out.println(ANSI_RED + "[Error]: " + Message + "." + ANSI_WHITE);
+        logString += ANSI_RED + "[Error]: " + Message + "." + ANSI_WHITE + "\n";
     }
 
     public static void Log(String Message) {
-        System.out.println("[Log]: " + Message + ".");
-        logString += "[Log]: " + Message + "./n";
+        if(show)
+            System.out.println("[Log]: " + Message + ".");
+        logString += "[Log]: " + Message + ".\n";
     }
 
     public static void Declare(String Message) {
         System.out.println(ANSI_PURPLE + "[Declaration]: " + Message + "." + ANSI_WHITE);
-        logString += ANSI_PURPLE + "[Declaration]: " + Message + "." + ANSI_WHITE + "/n";
+        logString += ANSI_PURPLE + "[Declaration]: " + Message + "." + ANSI_WHITE + "\n";
     }
 
     public String getLogString() {
